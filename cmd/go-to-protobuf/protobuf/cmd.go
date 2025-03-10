@@ -34,6 +34,7 @@ import (
 	"k8s.io/gengo/v2/namer"
 	"k8s.io/gengo/v2/parser"
 	"k8s.io/gengo/v2/types"
+	"k8s.io/klog/v2"
 )
 
 type Generator struct {
@@ -85,7 +86,8 @@ func (g *Generator) BindFlags(flag *flag.FlagSet) {
 // This roughly models gengo/v2.Execute.
 func Run(g *Generator) {
 	// Roughly models gengo/v2.newBuilder.
-	log.Println("running")
+	klog.V(2).Info("running")
+	klog.V(2).Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
 	p := parser.NewWithOptions(parser.Options{BuildTags: []string{"proto"}})
 
 	var allInputs []string
@@ -235,7 +237,7 @@ func Run(g *Generator) {
 	}
 	log.Printf("getting here, the keep proto flag is %v", g.KeepGogoproto)
 	if !g.KeepGogoproto {
-		log.Println("reruning to remove proto")
+		klog.V(2).Info("reruning to remove proto")
 		// Clean existing files first
 		for _, p := range outputPackages {
 			if err := p.(*protobufPackage).Clean(); err != nil {
