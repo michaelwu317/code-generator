@@ -235,6 +235,7 @@ func Run(g *Generator) {
 	}
 
 	if !g.KeepGogoproto {
+		fmt.Println("reruning to remove proto")
 		// Clean existing files first
 		for _, p := range outputPackages {
 			if err := p.(*protobufPackage).Clean(); err != nil {
