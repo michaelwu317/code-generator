@@ -20,6 +20,7 @@ package main
 
 import (
 	goflag "flag"
+	"fmt"
 
 	flag "github.com/spf13/pflag"
 	"k8s.io/code-generator/cmd/go-to-protobuf/protobuf"
@@ -29,6 +30,7 @@ import (
 var g = protobuf.New()
 
 func init() {
+	fmt.Println("Running michaelwu317's fork v0.1.0")
 	klog.InitFlags(nil)
 	g.BindFlags(flag.CommandLine)
 	goflag.Set("logtostderr", "true")
