@@ -235,7 +235,13 @@ func Run(g *Generator) {
 	}
 
 	if !g.KeepGogoproto {
-		// generate, but do so without gogoprotobuf extensions
+		// Clean existing files first
+		for _, p := range outputPackages {
+			if err := p.(*protobufPackage).Clean(); err != nil {
+				log.Fatalf("Unable to clean package %s: %v", p.Name(), err)
+			}
+		}
+		// Then regenerate without Gogo
 		for _, outputPackage := range outputPackages {
 			p := outputPackage.(*protobufPackage)
 			p.OmitGogo = true
