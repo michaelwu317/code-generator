@@ -86,8 +86,9 @@ func (g *Generator) BindFlags(flag *flag.FlagSet) {
 // This roughly models gengo/v2.Execute.
 func Run(g *Generator) {
 	// Roughly models gengo/v2.newBuilder.
-	klog.V(2).Info("running")
-	klog.V(2).Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
+	fmt.Println("testttt")
+	klog.Info("running")
+	klog.Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
 	p := parser.NewWithOptions(parser.Options{BuildTags: []string{"proto"}})
 
 	var allInputs []string
@@ -235,7 +236,8 @@ func Run(g *Generator) {
 	if err := c.ExecuteTargets(localOutputPackages); err != nil {
 		log.Fatalf("Failed executing local generator: %v", err)
 	}
-	log.Printf("getting here, the keep proto flag is %v", g.KeepGogoproto)
+	klog.Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
+	fmt.Sprintf("value of keepproto is %v", g.KeepGogoproto)
 	if !g.KeepGogoproto {
 		klog.V(2).Info("reruning to remove proto")
 		// Clean existing files first
