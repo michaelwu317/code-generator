@@ -466,6 +466,8 @@ func isFundamentalProtoType(t *types.Type) (*types.Type, bool) {
 			return &types.Type{Name: types.Name{Name: "uint64"}, Kind: types.Protobuf}, true
 		case "int8":
 			return &types.Type{Name: types.Name{Name: "int64"}, Kind: types.Protobuf}, true
+		case "uint8", "byte":
+			return &types.Type{Name: types.Name{Name: "uint32"}, Kind: types.Protobuf}, true
 		}
 		// TODO: complex?
 	}
