@@ -30,7 +30,7 @@ import (
 var g = protobuf.New()
 
 func init() {
-	fmt.Println("Running michaelwu317's fork v0.1.0")
+	fmt.Println("Running michaelwu317's fork v0.3.0")
 	klog.InitFlags(nil)
 	g.BindFlags(flag.CommandLine)
 	goflag.Set("logtostderr", "true")
