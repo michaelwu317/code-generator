@@ -315,10 +315,6 @@ func Run(g *Generator) {
 		}
 	}
 
-	if g.SkipGeneratedRewrite {
-		return
-	}
-
 	if !g.KeepGogoproto {
 		// generate, but do so without gogoprotobuf extensions
 		for _, outputPackage := range outputPackages {
@@ -328,6 +324,10 @@ func Run(g *Generator) {
 		if err := c.ExecuteTargets(localOutputPackages); err != nil {
 			log.Fatalf("Failed executing local generator: %v", err)
 		}
+	}
+
+	if g.SkipGeneratedRewrite {
+		return
 	}
 
 	for _, outputPackage := range outputPackages {
