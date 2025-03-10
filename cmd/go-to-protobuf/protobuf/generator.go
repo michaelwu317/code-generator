@@ -743,9 +743,12 @@ func assembleProtoFile(w io.Writer, f *generator.File) {
 
 	fmt.Fprint(w, "syntax = \"proto3\";\n\n")
 
-	if len(f.PackageName) > 0 {
-		fmt.Fprintf(w, "package %s;\n\n", f.PackageName)
-	}
+	// if len(f.PackageName) > 0 {
+	// 	fmt.Fprintf(w, "package %s;\n\n", f.PackageName)
+	// }
+
+	// hard code audit v1 for our purpose
+	fmt.Fprintf(w, "package %s;\n\n", "audit.v1")
 
 	if len(f.Imports) > 0 {
 		imports := []string{}
