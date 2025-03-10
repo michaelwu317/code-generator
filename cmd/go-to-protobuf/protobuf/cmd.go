@@ -234,6 +234,17 @@ func Run(g *Generator) {
 		log.Fatalf("Failed executing local generator: %v", err)
 	}
 
+	if !g.KeepGogoproto {
+		// generate, but do so without gogoprotobuf extensions
+		for _, outputPackage := range outputPackages {
+			p := outputPackage.(*protobufPackage)
+			p.OmitGogo = true
+		}
+		if err := c.ExecuteTargets(localOutputPackages); err != nil {
+			log.Fatalf("Failed executing local generator: %v", err)
+		}
+	}
+
 	if g.OnlyIDL {
 		return
 	}
@@ -312,17 +323,6 @@ func Run(g *Generator) {
 		if err != nil {
 			log.Println(strings.Join(cmd.Args, " "))
 			log.Fatalf("Unable to apply gofmt for %s: %v", p.Name(), err)
-		}
-	}
-
-	if !g.KeepGogoproto {
-		// generate, but do so without gogoprotobuf extensions
-		for _, outputPackage := range outputPackages {
-			p := outputPackage.(*protobufPackage)
-			p.OmitGogo = true
-		}
-		if err := c.ExecuteTargets(localOutputPackages); err != nil {
-			log.Fatalf("Failed executing local generator: %v", err)
 		}
 	}
 
