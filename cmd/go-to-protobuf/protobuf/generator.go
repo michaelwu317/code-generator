@@ -49,7 +49,7 @@ type genProtoIDL struct {
 func (g *genProtoIDL) PackageVars(c *generator.Context) []string {
 	if g.omitGogo {
 		return []string{
-			fmt.Sprintf("option go_package = %q;", g.localGoPackage.Package),
+			`option go_package = "github.com/twitter-payments/orchestrator/internal/genproto/audit/v1";`,
 		}
 	}
 	return []string{
