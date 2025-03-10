@@ -34,7 +34,6 @@ import (
 	"k8s.io/gengo/v2/namer"
 	"k8s.io/gengo/v2/parser"
 	"k8s.io/gengo/v2/types"
-	"k8s.io/klog/v2"
 )
 
 type Generator struct {
@@ -86,9 +85,6 @@ func (g *Generator) BindFlags(flag *flag.FlagSet) {
 // This roughly models gengo/v2.Execute.
 func Run(g *Generator) {
 	// Roughly models gengo/v2.newBuilder.
-	fmt.Println("testttt")
-	klog.Info("running")
-	klog.Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
 	p := parser.NewWithOptions(parser.Options{BuildTags: []string{"proto"}})
 
 	var allInputs []string
@@ -236,10 +232,8 @@ func Run(g *Generator) {
 	if err := c.ExecuteTargets(localOutputPackages); err != nil {
 		log.Fatalf("Failed executing local generator: %v", err)
 	}
-	klog.Infof("getting here, the keep proto flag is %v", g.KeepGogoproto)
-	fmt.Sprintf("value of keepproto is %v", g.KeepGogoproto)
+
 	if !g.KeepGogoproto {
-		klog.V(2).Info("reruning to remove proto")
 		// Clean existing files first
 		for _, p := range outputPackages {
 			if err := p.(*protobufPackage).Clean(); err != nil {
