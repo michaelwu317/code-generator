@@ -24,8 +24,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"unicode"
 
+	"github.com/iancoleman/strcase"
 	"k8s.io/gengo/v2"
 	"k8s.io/gengo/v2/generator"
 	"k8s.io/gengo/v2/namer"
@@ -648,7 +648,7 @@ func membersToFields(locator ProtobufLocator, t *types.Type, localPackage types.
 			continue
 		}
 
-		field.Name = camelToSnake(m.Name)
+		field.Name = strcase.ToSnake(m.Name)
 
 		if err := protobufTagToField(protobufTag, &field, m, t, localPackage); err != nil {
 			return nil, err
@@ -721,21 +721,6 @@ func membersToFields(locator ProtobufLocator, t *types.Type, localPackage types.
 		byTag[field.Tag] = field
 	}
 	return fields, nil
-}
-
-func camelToSnake(s string) string {
-	var result strings.Builder
-	for i, r := range s {
-		if unicode.IsUpper(r) {
-			if i > 0 {
-				result.WriteRune('_')
-			}
-			result.WriteRune(unicode.ToLower(r))
-		} else {
-			result.WriteRune(r)
-		}
-	}
-	return result.String()
 }
 
 func genComment(out io.Writer, lines []string, indent string) {
